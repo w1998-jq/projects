@@ -39,7 +39,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     public Order secKill(User user, GoodsVo goodsVo) {
         SeckillGoods seckillGoods = seckillGoodsService.getOne(new QueryWrapper<SeckillGoods>().eq("goods_id", goodsVo.getId()));
         seckillGoods.setStockCount(seckillGoods.getStockCount() - 1);
-        seckillGoodsService.updateById(seckillGoods);
+        //seckillGoodsService.updateById(seckillGoods);
+        seckillGoodsService.delStock(seckillGoods.getGoodsId());
         //生成订单
         Order order = new Order();
         order.setUserId(user.getId());

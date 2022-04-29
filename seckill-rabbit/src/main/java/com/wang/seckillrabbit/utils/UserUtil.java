@@ -36,7 +36,7 @@ public class UserUtil {
             users.add(user);
         }
         System.out.println("create User");
-        /*Connection conn = getConn();
+        Connection conn = getConn();
         String sql = "insert into t_user(login_count,nickname,register_date,salt,password,id) values(?,?,?,?,?,?)";
         PreparedStatement pstmp = conn.prepareStatement(sql);
         for(int i =0;i < users.size();i ++){
@@ -52,7 +52,7 @@ public class UserUtil {
         pstmp.executeBatch();
         pstmp.clearParameters();
         conn.close();
-        System.out.println("插入完毕");*/
+        System.out.println("插入完毕");
         //登录，获取cookie
         String urlString = "http://localhost:8080/login/doLogin";
         File file = new File("D:\\config1.txt");

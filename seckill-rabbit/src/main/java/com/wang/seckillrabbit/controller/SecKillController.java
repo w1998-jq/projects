@@ -2,11 +2,14 @@ package com.wang.seckillrabbit.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.wang.seckillrabbit.pojo.Order;
+import com.wang.seckillrabbit.pojo.SeckillMessage;
 import com.wang.seckillrabbit.pojo.SeckillOrder;
 import com.wang.seckillrabbit.pojo.User;
+import com.wang.seckillrabbit.rabbitmq.MQServer;
 import com.wang.seckillrabbit.service.IGoodsService;
 import com.wang.seckillrabbit.service.IOrderService;
 import com.wang.seckillrabbit.service.ISeckillOrderService;
+import com.wang.seckillrabbit.utils.JsonUtil;
 import com.wang.seckillrabbit.vo.GoodsVo;
 import com.wang.seckillrabbit.vo.RespBean;
 import com.wang.seckillrabbit.vo.RespBeanEnum;
@@ -33,6 +36,9 @@ public class SecKillController {
 
     @Autowired
     private IOrderService orderService;
+
+    @Autowired
+    private MQServer mqServer;
 
     /**
      * @description:  秒杀前优化：2699
@@ -61,6 +67,8 @@ public class SecKillController {
             model.addAttribute("errmsg",RespBeanEnum.REPEATE_KILL.getMessage());
             return "secKillFail";
         }
+        SeckillMessage seckillMessage = new SeckillMessage(user, goodsId);
+        mqServer.sendSeckillMessage(JsonUtil.object2JsonStr(seckillMessage));
         Order order =  orderService.secKill(user,goodsVo);
         model.addAttribute("order",order);
         model.addAttribute("goods",goodsVo);

@@ -13,4 +13,5 @@ import com.wang.seckillrabbit.pojo.SeckillGoods;
  */
 public interface ISeckillGoodsService extends IService<SeckillGoods> {
 
+    void delStock(Long goodsId);
 }

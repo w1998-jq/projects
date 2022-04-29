@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SeckillGoodsMapper extends BaseMapper<SeckillGoods> {
 
+    void delStock(Long goodsId);
 }
